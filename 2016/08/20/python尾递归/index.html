@@ -1,0 +1,720 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Python递归溢出python实现Fibonacci数列推导 代码version_1 如下：12345def fib(n):    if n &amp;lt;= 1:        return n:    else:        return fib(n - 1) + fib(n - 2)  # 入栈 在接着执行这个函数时，数值大于一定的时候，就出现了超过了 超过最大递归深度的错误：123In [5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python尾调用">
+<meta property="og:url" content="http://dukeyu1991.github.io/2016/08/20/python尾递归/index.html">
+<meta property="og:site_name" content="慎思之,笃行之">
+<meta property="og:description" content="Python递归溢出python实现Fibonacci数列推导 代码version_1 如下：12345def fib(n):    if n &amp;lt;= 1:        return n:    else:        return fib(n - 1) + fib(n - 2)  # 入栈 在接着执行这个函数时，数值大于一定的时候，就出现了超过了 超过最大递归深度的错误：123In [5">
+<meta property="og:updated_time" content="2016-08-21T10:19:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python尾调用">
+<meta name="twitter:description" content="Python递归溢出python实现Fibonacci数列推导 代码version_1 如下：12345def fib(n):    if n &amp;lt;= 1:        return n:    else:        return fib(n - 1) + fib(n - 2)  # 入栈 在接着执行这个函数时，数值大于一定的时候，就出现了超过了 超过最大递归深度的错误：123In [5">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://dukeyu1991.github.io/2016/08/20/python尾递归/"/>
+
+
+
+
+
+  <title>python尾调用 | 慎思之,笃行之</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">慎思之,笃行之</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://dukeyu1991.github.io/2016/08/20/python尾递归/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Duke Yu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="慎思之,笃行之">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python尾调用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-20T23:41:27+08:00">
+                2016-08-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Python递归溢出"><a href="#Python递归溢出" class="headerlink" title="Python递归溢出"></a>Python递归溢出</h2><h3 id="python实现Fibonacci数列推导"><a href="#python实现Fibonacci数列推导" class="headerlink" title="python实现Fibonacci数列推导"></a>python实现Fibonacci数列推导</h3><p> 代码version_1 如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</div><div class="line">        <span class="keyword">return</span> n:</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>)  <span class="comment"># 入栈</span></div></pre></td></tr></table></figure></p>
+<p>在接着执行这个函数时，数值大于一定的时候，就出现了超过了 <code>超过最大递归深度</code>的错误：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">5</span>]: first_test = fib(<span class="number">30</span>)</div><div class="line">In [<span class="number">7</span>]: second_test = fib(<span class="number">1000</span>)</div><div class="line">RuntimeError: maximum recursion depth exceeded</div></pre></td></tr></table></figure></p>
+<h3 id="version-1中产生问题的分析"><a href="#version-1中产生问题的分析" class="headerlink" title="version_1中产生问题的分析"></a>version_1中产生问题的分析</h3><p>在分析问题前，我们先需要了解几个基本的概念</p>
+<ol>
+<li>递归深度<br> 在Python函数执行时，遇到中断，系统会把正执行的环境保存下来，压入栈中。在version_1中，执行到入栈那行时，系统栈中就会增加一个。而递归深度是指在执行该函数时，系统栈压入对象的个数。</li>
+<li>Python最大的递归深度<br>Python解释器中规定了栈的最大深度。程序压入栈的对象超过了栈的深度，就会发生栈满。从而导致栈溢出的错误。<h4 id="version-1栈溢出分析"><a href="#version-1栈溢出分析" class="headerlink" title="version_1栈溢出分析"></a>version_1栈溢出分析</h4>通过上面的基本概念后，我们可以去分析version_1中为何会出现溢出的错误。<code>return fib(n - 1) + fib(n - 2)</code>,系统将此时的环境压入栈，转而去执行<code>fib(n - 1)</code>。类似的在执行 <code>return fib(n - 2) + fib(n - 3)</code>, 将fib(n - 1)执行环境压入栈中。依次类推，系统栈不断增加，最终导致栈溢出。 </li>
+</ol>
+<h2 id="通过尾递归尝试解决递归栈溢出问题"><a href="#通过尾递归尝试解决递归栈溢出问题" class="headerlink" title="通过尾递归尝试解决递归栈溢出问题"></a>通过尾递归尝试解决递归栈溢出问题</h2><p>尾递归是指:</p>
+<ol>
+<li>在函数返回的时候，调用自身本身。</li>
+<li>return语句不能包含表达式。<br>能满足上述两条规则，编译器或者解释器能够进行优化，使得递归本身就占用一个栈空间。无论多少次调用，都不会导致栈溢出<h3 id="python用尾递归实现Fibonacci数列推导"><a href="#python用尾递归实现Fibonacci数列推导" class="headerlink" title="python用尾递归实现Fibonacci数列推导"></a>python用尾递归实现Fibonacci数列推导</h3>代码version_2如下：<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n, _cur=<span class="number">0</span>, _next=<span class="number">1</span>)</span>:</span></div><div class="line">      <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</div><div class="line">          <span class="keyword">return</span> _cur</div><div class="line">      <span class="keyword">else</span>:</div><div class="line">          <span class="keyword">return</span> fib(n - <span class="number">1</span>, _next,  _next + _cur)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>但是，我们在执行这个函数的时候，同样的会出现超过最大深度的错误。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">8</span>]: third_test = fib(<span class="number">1000</span>)</div><div class="line">RuntimeError: maximum recursion depth exceeded</div></pre></td></tr></table></figure></p>
+<h3 id="version-2中产生问题的分析"><a href="#version-2中产生问题的分析" class="headerlink" title="version_2中产生问题的分析"></a>version_2中产生问题的分析</h3><p>Python解释器没有对尾递归进行优化。所以，即使用了尾递归的方式，也不能逃脱栈溢出的悲剧命运。</p>
+<h2 id="到底如何消除尾递归栈溢出呢？"><a href="#到底如何消除尾递归栈溢出呢？" class="headerlink" title="到底如何消除尾递归栈溢出呢？"></a>到底如何消除尾递归栈溢出呢？</h2><p>Python中有生成器的概念。当你需要使用的时候才返回一个对象，不使用时，只是内存中的一个函数。故我们尝试使用生成器方式返回的fib函数，同时再另写一个使得fib能完全循环完成的『陷阱』函数。<br>代码verison_3如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> types <span class="keyword">import</span> GeneratorType</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n, _cur=<span class="number">0</span>, _next=<span class="number">1</span>)</span>:</span></div><div class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</div><div class="line">        <span class="keyword">yield</span> _cur</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">yield</span> fib(n - <span class="number">1</span>, _next, _cur + _next)</div><div class="line">        </div><div class="line"> <span class="function"><span class="keyword">def</span> <span class="title">trap</span><span class="params">(g, *args, **kwargs)</span>:</span></div><div class="line">     wrap_g = g(*args, **kwargs)</div><div class="line">     <span class="keyword">while</span> isinstance(wrap_g, GeneratorType):</div><div class="line">        wrap_g = wrap_g.next()</div><div class="line">     <span class="keyword">return</span> wrap_g</div><div class="line"> <span class="keyword">print</span> trap(fib, <span class="number">1000</span>)</div><div class="line"><span class="number">26863810024485359386146727202142923967616609318986952340123175997617981700247881689338369654483356564191827856161443356312976673642210350324634850410377680367334151172899169723197082763985615764450078474174626</span></div></pre></td></tr></table></figure></p>
+<p>没有发生栈溢出，这是一条可行之路。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Python本身对尾递归没有进行很好的优化，而同时递归执行的效率也不算太高。但是在简化代码、理清逻辑方面，它能提供很大的帮助。所以使用递归的时候要时刻注意溢出的问题。<br>应用Python生成器的方法，能够完美的消除栈溢出问题。在今后的代码中可以尝试去使用。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Duke Yu WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Duke Yu Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/04/python编码问题/" rel="next" title="python编码问题">
+                <i class="fa fa-chevron-left"></i> python编码问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/24/python-pdb入门/" rel="prev" title="python pdb入门">
+                python pdb入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Duke Yu" />
+          <p class="site-author-name" itemprop="name">Duke Yu</p>
+           
+              <p class="site-description motion-element" itemprop="description">文章皆是自己总结,绝非直接转载</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/dukeyu1991" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python递归溢出"><span class="nav-number">1.</span> <span class="nav-text">Python递归溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#python实现Fibonacci数列推导"><span class="nav-number">1.1.</span> <span class="nav-text">python实现Fibonacci数列推导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#version-1中产生问题的分析"><span class="nav-number">1.2.</span> <span class="nav-text">version_1中产生问题的分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#version-1栈溢出分析"><span class="nav-number">1.2.1.</span> <span class="nav-text">version_1栈溢出分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过尾递归尝试解决递归栈溢出问题"><span class="nav-number">2.</span> <span class="nav-text">通过尾递归尝试解决递归栈溢出问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#python用尾递归实现Fibonacci数列推导"><span class="nav-number">2.1.</span> <span class="nav-text">python用尾递归实现Fibonacci数列推导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#version-2中产生问题的分析"><span class="nav-number">2.2.</span> <span class="nav-text">version_2中产生问题的分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#到底如何消除尾递归栈溢出呢？"><span class="nav-number">3.</span> <span class="nav-text">到底如何消除尾递归栈溢出呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Duke Yu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

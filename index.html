@@ -264,7 +264,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://dukeyu1991.github.io/2017/05/14/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://dukeyu1991.github.io/2016/09/29/python-classmethod和staticmethod区别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Duke Yu">
@@ -283,7 +283,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/14/hello-world/" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/2016/09/29/python-classmethod和staticmethod区别/" itemprop="url">python classmethod和staticmethod区别</a></h1>
         
 
         <div class="post-meta">
@@ -295,8 +295,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-14T14:46:08+08:00">
-                2017-05-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-29T14:14:43+08:00">
+                2016-09-29
               </time>
             
 
@@ -332,16 +332,740 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+            <p>其实classmethod和staticmethod没有什么特别大的区别。<br>但还是需要注意如下几点：</p>
+<ol>
+<li><p>staticmethod函数参数没有要求，而classmethod函数第一个参数必须传类(该参数名通常使用cls)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MethodClass</span><span class="params">(object)</span>:</span></div><div class="line"><span class="meta">       @classmethod</span></div><div class="line">       <span class="function"><span class="keyword">def</span> <span class="title">class_method</span><span class="params">(cls)</span>:</span></div><div class="line">           print(<span class="string">'this is class method!'</span>)</div><div class="line">   </div><div class="line"><span class="meta">       @staticmethod</span></div><div class="line">       <span class="function"><span class="keyword">def</span> <span class="title">static_method</span><span class="params">()</span>:</span></div><div class="line">           print(<span class="string">'this is static method!'</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>调用的方法其实类似,实际上classmethod是先获取了实例的类，再调取该方法。如果直接使用类调用，则无需进行获取类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a = MethodClass()</div><div class="line">a.class_method()</div><div class="line"><span class="comment"># 等同于</span></div><div class="line">a.__class__.class_method()</div></pre></td></tr></table></figure></li>
+</ol>
 
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://dukeyu1991.github.io/2016/08/24/python-pdb入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Duke Yu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="慎思之,笃行之">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/24/python-pdb入门/" itemprop="url">python pdb入门</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-24T18:55:26+08:00">
+                2016-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前一直用print去调试Python代码，经常左一个print，右一个print。偶尔碰上去查询大量数据的代码，不仅麻烦，而且很浪费时间。整体的调试效率很低。为了提高调试的效率，决定学习一下pdb。<br>pdb提供了在Python debug模式中交互的功能，在交互的过程中包含这各个变量，非常方便的去调用。并且能够一步一步的去执行代码，这样能够更加清晰的认识程序实际的执行过程并找出其中的bug。</p>
+<h2 id="启动pdb"><a href="#启动pdb" class="headerlink" title="启动pdb"></a>启动pdb</h2><p>首先，需要在想要调试的代码处启用调试交互。这里有几种方式去启动pdb</p>
+<ol>
+<li><p>从命令行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> ipython -m pdb pdb_test.py</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(3)&lt;module&gt;()</div><div class="line">-&gt; import pdb</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p>在Python交互环境里 <em>In[3]中的main为pdb_test的函数</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="keyword">import</span> pdb_test</div><div class="line">In [<span class="number">2</span>]: <span class="keyword">import</span> pdb</div><div class="line">In [<span class="number">3</span>]: pdb.run(<span class="string">'pdb_test.main()'</span>)</div><div class="line">&gt; &lt;string&gt;(<span class="number">1</span>)&lt;module&gt;()</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p>在代码需要调试处。在需要进行调试的代码前加入 <code>pdb.set_trace()</code>, 然后启动命令行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">    ipython pdb_test.py</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(14)main()</div><div class="line">-&gt; print class_student['english_1']</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p>程序报错后 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> # 此处程序出错</div><div class="line">In [3]: import pdb</div><div class="line">In [4]: pdb.pm()</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(12)main()</div><div class="line">-&gt; print class_student['sport_1']</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="pdb主要的命令"><a href="#pdb主要的命令" class="headerlink" title="pdb主要的命令"></a>pdb主要的命令</h2><p>进入了调试模式后，可以使用 <code>h(elp)</code> 查看帮助。以下将pdb主要的几个命令罗列在下，以备不时之需查用。</p>
+<h3 id="断点设置"><a href="#断点设置" class="headerlink" title="断点设置"></a>断点设置</h3><ol>
+<li><p><code>b(reak) [代码行号] | [文件名:代码行号]</code> 不加数字列出所有断点，加数字表示在行号处增加一个断点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">(Pdb) b <span class="number">10</span>  <span class="comment"># 在代码第10行增加一个断点</span></div><div class="line">Breakpoint <span class="number">1</span> at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line">(Pdb) b  <span class="comment"># 显示所有断点</span></div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line">(Pdb) b pdb_test.py:<span class="number">11</span></div><div class="line">Breakpoint <span class="number">2</span> at /Users/somebody/Items/test/pdb_test.py:<span class="number">11</span></div><div class="line">(Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line"><span class="number">2</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">11</span></div><div class="line"> ``` </div><div class="line"><span class="number">2.</span> `cl(ear) [断点标识]`   不加断点表示表示清空所有的断点。</div><div class="line"> ``` python</div><div class="line">(Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line"><span class="number">2</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">11</span></div><div class="line">(Pdb) cl <span class="number">1</span></div><div class="line">Deleted breakpoint <span class="number">1</span></div><div class="line">(Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">2</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">11</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>disable 断点编号</code> 令断点失效，但不同cl删除断点。它只让断点失效，但不删除。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> (Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line">(Pdb) disable <span class="number">1</span></div><div class="line">(Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep no    at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>enable 断点编号</code> 将3中失效的断点重新置为有效。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> (Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep no    at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line">(Pdb) enable <span class="number">1</span></div><div class="line">(Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>tbreak [代码行号] | [文件名:代码行号]</code> 临时性的断点，当该短点首次被击中时，会自动被移除。其他的同break没有区别。</p>
+</li>
+<li><code>commands 断点编号</code>在断点前执行前，可以启动一个脚本编辑页，在其中显示想要或需要显示的变量，输入end退出编辑页。然后再执行该行前，使用<code>continue</code>，就能看到之前编辑过的显示的变量。<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line">  8  -&gt;	    print a</div><div class="line">  9  	    print b</div><div class="line"> 10  	    c = &#123;'a': 1, 'b': 2&#125;</div><div class="line">(Pdb) b 11</div><div class="line">Breakpoint 1 at /Users/somebody/Items/test/pdb_test.py:11</div><div class="line">(Pdb) commands 1</div><div class="line">(com) p a</div><div class="line">(com) p c</div><div class="line">(com) end</div><div class="line">(Pdb) continue</div><div class="line">10</div><div class="line">&#123;'a': 1, 'b': 2&#125;</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(11)add_test()</div><div class="line">-&gt; d = c.get('a', None)</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="程序运行"><a href="#程序运行" class="headerlink" title="程序运行"></a>程序运行</h3><ol>
+<li><p><code>n(ext)</code> 单步运行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line"> 10 B-&gt;	        'english_2': 'frank',</div><div class="line">(Pdb) n</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(11)main()</div><div class="line">-&gt; 'math_1': 'frank',</div><div class="line">(Pdb) l</div><div class="line"> 11  -&gt;	        'math_1': 'frank',</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>s(tep)</code> 进入函数内</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line"> 17  	if __name__ == '__main__':</div><div class="line"> 18  	    pdb.set_trace()</div><div class="line"> 19  -&gt;	    main()</div><div class="line"> 20</div><div class="line">[EOF]</div><div class="line">(Pdb) s</div><div class="line">--Call--</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(6)main()</div><div class="line">-&gt; def main():</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>c(ont(inue))</code> 调到下一个断点</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line"> 11  -&gt;	        'math_1': 'frank',</div><div class="line">(Pdb) c</div><div class="line">duke</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(15)main()</div><div class="line">-&gt; print class_student['sport_1']</div><div class="line">(Pdb) l</div><div class="line"> 15 B-&gt;	    print class_student['sport_1']</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>r(eturn)</code> 执行代码直至程序从当前的函数返回</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> (Pdb) return</div><div class="line">aaaaa</div><div class="line">exit test function</div><div class="line">--Return--</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(22)test()-&gt;None</div><div class="line">-&gt; print 'exit test function'</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>unt(il)</code> 当执行的代码大于当前执行的位置行号, 停止。通常用于等待一个遍历或者重复的代码段执行完毕。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line"> 15  	    for item in xrange(100):</div><div class="line"> 16  -&gt;	        continue</div><div class="line"> 17</div><div class="line"> 18  	    return a + b</div><div class="line">(Pdb) until</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(18)add_test()</div><div class="line">-&gt; return a + b</div><div class="line">(Pdb) l</div><div class="line"> 15  	    for item in xrange(100):</div><div class="line"> 16  	        continue</div><div class="line"> 18  -&gt;	    return a + b</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>j(ump) 代码行号</code> 直接跳到目标代码行执行。方便你重新设定需要执行的位置，也可以略过不需要执行的代码。但是不能跳入一个循环中或者一个try:except的代码块中。finally的代码必须要执行，所以也不能跳出finally的代码段。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l  6  	def add_test(a, b):</div><div class="line">  7  	    pdb.set_trace()</div><div class="line">  8  -&gt;	    print a</div><div class="line">  (Pdb) jump 19</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(19)add_test()</div><div class="line">-&gt;</div><div class="line">(Pdb) l</div><div class="line"> 19</div><div class="line"> 20  -&gt;	    d = c.get('a', None)</div><div class="line"> 22  	    return a + b</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>u(p)</code> 从当前的未知跳到执行的栈中的上一层。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line">  9  	    print b</div><div class="line"> 10  -&gt;	    c = &#123;'a': 1, 'b': 2&#125;</div><div class="line">(Pdb) up</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(48)&lt;module&gt;()</div><div class="line">-&gt; add_test(a, b)</div><div class="line">(Pdb) l</div><div class="line"> 47  	    b = 5</div><div class="line"> 48  -&gt;	    add_test(a, b)</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>d(own)</code> 作用与up相反，从当前的栈层中跳入下一层的栈中。</p>
+</li>
+<li><code>ignore 断点编号 [忽略次数]</code> 忽略某个断点n次。如果没有忽略次数，将该断点重新设置为有效，不会被忽略。</li>
+<li><code>condition 断点编号 [判断条件]</code>设置某个断点在判断条件为True时，断点才有效。省略判断条件，则令之前condition设定的所有条件失效。</li>
+</ol>
+<h3 id="程序查看"><a href="#程序查看" class="headerlink" title="程序查看"></a>程序查看</h3><ol>
+<li><code>w(here)</code> 显示当前代码所处的栈层</li>
+<li><code>l(ist)</code> 会显示当前执行的附件的代码，不断的使用list会不断列出代码，直至代码末尾。</li>
+<li><p><code>a(rgs)</code> 显示当前函数所有的变量</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">  (Pdb) l</div><div class="line">   6  	def add_test(a, b):</div><div class="line">  7  	    pdb.set_trace()</div><div class="line">  8  -&gt;	    print a</div><div class="line">  9  	    print b</div><div class="line"> 10  	    return a + b</div><div class="line"> (Pdb) args</div><div class="line">a = 10</div><div class="line">b = 5</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>p 表达式</code> 显示 <em>表达式</em> 在当前环境中执行的的结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> <span class="comment"># 同3中的上下文环境</span></div><div class="line">(Pdb) p a</div><div class="line"><span class="number">10</span></div><div class="line">(Pdb) p a + b</div><div class="line"><span class="number">15</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>pp 表达式</code> 功能同4，但是使用Python中的pprint模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> (Pdb) pp a</div><div class="line"><span class="number">10</span></div><div class="line">(Pdb) pp a + b</div><div class="line"><span class="number">15</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>whatis 表达式</code> 显示表达式运算结果的类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> (Pdb) whatis <span class="number">10</span>+<span class="number">5</span></div><div class="line">&lt;type <span class="string">'int'</span>&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>bt</code> 貌似和<code>where</code>一个功能，都是显示栈层的。</p>
+</li>
+</ol>
+<h3 id="pdb自身命令"><a href="#pdb自身命令" class="headerlink" title="pdb自身命令"></a>pdb自身命令</h3><ol>
+<li><code>q(uit)</code> 退出调试环境。</li>
+<li><code>exit</code> 作用同1。</li>
+<li><p><code>alias [别名 [命令]]</code> 将某一个命令起一个别名。执行该别名，相当于执行命令。后面不带参数，表示查看所有的关联的命令。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> (Pdb) alias test_command p a</div><div class="line">(Pdb) alias</div><div class="line">test_command = p a</div><div class="line">(Pdb) test_command</div><div class="line"><span class="number">10</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>unalias 别名</code> 作用和 <code>alias</code>相反，取消命令和别名关联。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> (Pdb) alias</div><div class="line">test_command = p a</div><div class="line">(Pdb) unalias test_command</div><div class="line">(Pdb) alias</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>run</code> 当用命令行方式启动的调试时,执行run能够重新启动调试的代码。</p>
+</li>
+<li><code>restart</code> 就是 <code>run</code>的一个马甲。</li>
+<li><code>debug</code>在debug里面再开一个debug界面，相当于递归debug。<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> (Pdb) debug</div><div class="line">ENTERING RECURSIVE DEBUGGER</div><div class="line">&gt; &lt;string&gt;(<span class="number">1</span>)&lt;module&gt;()</div><div class="line">((Pdb)) quit</div><div class="line">LEAVING RECURSIVE DEBUGGER</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>现在好多编辑器都集成了pdb debug功能，界面更加的友好。譬如pycharm就有很好的debug功能。在IDE debug的时候，代码显示的更多，可以更加方便的调试。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://dukeyu1991.github.io/2016/08/20/python尾递归/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Duke Yu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="慎思之,笃行之">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/20/python尾递归/" itemprop="url">python尾调用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-20T23:41:27+08:00">
+                2016-08-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Python递归溢出"><a href="#Python递归溢出" class="headerlink" title="Python递归溢出"></a>Python递归溢出</h2><h3 id="python实现Fibonacci数列推导"><a href="#python实现Fibonacci数列推导" class="headerlink" title="python实现Fibonacci数列推导"></a>python实现Fibonacci数列推导</h3><p> 代码version_1 如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</div><div class="line">        <span class="keyword">return</span> n:</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>)  <span class="comment"># 入栈</span></div></pre></td></tr></table></figure></p>
+<p>在接着执行这个函数时，数值大于一定的时候，就出现了超过了 <code>超过最大递归深度</code>的错误：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">5</span>]: first_test = fib(<span class="number">30</span>)</div><div class="line">In [<span class="number">7</span>]: second_test = fib(<span class="number">1000</span>)</div><div class="line">RuntimeError: maximum recursion depth exceeded</div></pre></td></tr></table></figure></p>
+<h3 id="version-1中产生问题的分析"><a href="#version-1中产生问题的分析" class="headerlink" title="version_1中产生问题的分析"></a>version_1中产生问题的分析</h3><p>在分析问题前，我们先需要了解几个基本的概念</p>
+<ol>
+<li>递归深度<br> 在Python函数执行时，遇到中断，系统会把正执行的环境保存下来，压入栈中。在version_1中，执行到入栈那行时，系统栈中就会增加一个。而递归深度是指在执行该函数时，系统栈压入对象的个数。</li>
+<li>Python最大的递归深度<br>Python解释器中规定了栈的最大深度。程序压入栈的对象超过了栈的深度，就会发生栈满。从而导致栈溢出的错误。<h4 id="version-1栈溢出分析"><a href="#version-1栈溢出分析" class="headerlink" title="version_1栈溢出分析"></a>version_1栈溢出分析</h4>通过上面的基本概念后，我们可以去分析version_1中为何会出现溢出的错误。<code>return fib(n - 1) + fib(n - 2)</code>,系统将此时的环境压入栈，转而去执行<code>fib(n - 1)</code>。类似的在执行 <code>return fib(n - 2) + fib(n - 3)</code>, 将fib(n - 1)执行环境压入栈中。依次类推，系统栈不断增加，最终导致栈溢出。 </li>
+</ol>
+<h2 id="通过尾递归尝试解决递归栈溢出问题"><a href="#通过尾递归尝试解决递归栈溢出问题" class="headerlink" title="通过尾递归尝试解决递归栈溢出问题"></a>通过尾递归尝试解决递归栈溢出问题</h2><p>尾递归是指:</p>
+<ol>
+<li>在函数返回的时候，调用自身本身。</li>
+<li>return语句不能包含表达式。<br>能满足上述两条规则，编译器或者解释器能够进行优化，使得递归本身就占用一个栈空间。无论多少次调用，都不会导致栈溢出<h3 id="python用尾递归实现Fibonacci数列推导"><a href="#python用尾递归实现Fibonacci数列推导" class="headerlink" title="python用尾递归实现Fibonacci数列推导"></a>python用尾递归实现Fibonacci数列推导</h3>代码version_2如下：<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n, _cur=<span class="number">0</span>, _next=<span class="number">1</span>)</span>:</span></div><div class="line">      <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</div><div class="line">          <span class="keyword">return</span> _cur</div><div class="line">      <span class="keyword">else</span>:</div><div class="line">          <span class="keyword">return</span> fib(n - <span class="number">1</span>, _next,  _next + _cur)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>但是，我们在执行这个函数的时候，同样的会出现超过最大深度的错误。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">8</span>]: third_test = fib(<span class="number">1000</span>)</div><div class="line">RuntimeError: maximum recursion depth exceeded</div></pre></td></tr></table></figure></p>
+<h3 id="version-2中产生问题的分析"><a href="#version-2中产生问题的分析" class="headerlink" title="version_2中产生问题的分析"></a>version_2中产生问题的分析</h3><p>Python解释器没有对尾递归进行优化。所以，即使用了尾递归的方式，也不能逃脱栈溢出的悲剧命运。</p>
+<h2 id="到底如何消除尾递归栈溢出呢？"><a href="#到底如何消除尾递归栈溢出呢？" class="headerlink" title="到底如何消除尾递归栈溢出呢？"></a>到底如何消除尾递归栈溢出呢？</h2><p>Python中有生成器的概念。当你需要使用的时候才返回一个对象，不使用时，只是内存中的一个函数。故我们尝试使用生成器方式返回的fib函数，同时再另写一个使得fib能完全循环完成的『陷阱』函数。<br>代码verison_3如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> types <span class="keyword">import</span> GeneratorType</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n, _cur=<span class="number">0</span>, _next=<span class="number">1</span>)</span>:</span></div><div class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</div><div class="line">        <span class="keyword">yield</span> _cur</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">yield</span> fib(n - <span class="number">1</span>, _next, _cur + _next)</div><div class="line">        </div><div class="line"> <span class="function"><span class="keyword">def</span> <span class="title">trap</span><span class="params">(g, *args, **kwargs)</span>:</span></div><div class="line">     wrap_g = g(*args, **kwargs)</div><div class="line">     <span class="keyword">while</span> isinstance(wrap_g, GeneratorType):</div><div class="line">        wrap_g = wrap_g.next()</div><div class="line">     <span class="keyword">return</span> wrap_g</div><div class="line"> <span class="keyword">print</span> trap(fib, <span class="number">1000</span>)</div><div class="line"><span class="number">26863810024485359386146727202142923967616609318986952340123175997617981700247881689338369654483356564191827856161443356312976673642210350324634850410377680367334151172899169723197082763985615764450078474174626</span></div></pre></td></tr></table></figure></p>
+<p>没有发生栈溢出，这是一条可行之路。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Python本身对尾递归没有进行很好的优化，而同时递归执行的效率也不算太高。但是在简化代码、理清逻辑方面，它能提供很大的帮助。所以使用递归的时候要时刻注意溢出的问题。<br>应用Python生成器的方法，能够完美的消除栈溢出问题。在今后的代码中可以尝试去使用。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://dukeyu1991.github.io/2016/08/04/python编码问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Duke Yu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="慎思之,笃行之">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/04/python编码问题/" itemprop="url">python编码问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-04T19:31:53+08:00">
+                2016-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>  在Python编程中，会经常在decode, encode的时候出现各种问题，诸如<br>UnicodeDecodeError: ‘ascii’ codec can’t decode byte 0xe4 in position 0: ordinal not in range(128)<br>UnicodeEncodeError: ‘ascii’ codec can’t encode characters in position 0-1: ordinal not in range(128)<br>可是到底是什么原因导致了这个问题呢？<br>  其中的原因如果没能完全搞清楚，那在未来的日子里想必也是超级痛苦的。</p>
+<h2 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h2><p>   众所周知，计算机存储各式文件，无论是视频、音频、图片、文字，无非就是在硬盘中保存了一长串的01字符。可是计算机在运行时是通过什么样的方式去表示文字的呢？</p>
+<h3 id="ASCII码"><a href="#ASCII码" class="headerlink" title="ASCII码"></a>ASCII码</h3><p>  美帝在二战时期发明了第一台电脑。理所应当，计算机的一切表示方式都是按照美帝人民的习惯来的。<br>  英文总共不过26个字母，在加上一些符号，还有控制符，统共不过100+个字符。一个字节8位能有256中状态，用一个字节去表示足够了。聪明的科学家制定了一套字符编码标准，ASCII码，每个字符对应一串数字。最初ASCII码总共有128个字符编码，后来发现不够用，就出现了可扩展的ASCII码。<br>  对ASCII码有兴趣的同学可自行Google，这里的ASCII码对本文已经够了</p>
+<h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>  随着电脑进入了世界各地的千家万户，电脑的使用者不仅仅是英文国家的民众。举个栗子，在我大中国，常用汉字都有6000+了。这时，字符已经远远的超越了ASCII码表示范围了。再加上韩国、日本等世界其他国家的字符，毛估估有几十万个。如此庞大的字符库该如何表示呢？<br>  这时候有全球标准化组织提出了unicode编码，用2个字节去表示字符。2个字节总共能表示65536个字符，而这个数字还是远远不够。因此更近一步，在后面的规范中定义了一组附加字符，它也是由2个字节表示。也就是unicode总共有4个字节。理论上已经足够去涵盖一切文字的符号了。一旦字符的unicode编码确定下来就不会再改了。<br>  但unicode有一个很大的缺陷，太浪费空间了。一个字符’A’用一个字符就足够表示了，剩下的三字节就完全浪费掉了。正因为这个原因，unicode有各种编码方式：utf-8、utf-16、gbk等等。</p>
+<p>以上的背景就足够继续接下来的问题分析了，如果有兴趣深入的，请自行Google。</p>
+<h2 id="Python字符编码"><a href="#Python字符编码" class="headerlink" title="Python字符编码"></a>Python字符编码</h2><p>Python默认的编码是ASCII编码，可以通过下面的代码得到当前的编码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">sys.getdefaultencoding()</div></pre></td></tr></table></figure></p>
+<p>如果你的文件编码是ASCII编码，那么下面的代码将会出错。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">'你好'</span></div><div class="line">SyntaxError: Non-ASCII character <span class="string">'\xe4'</span> <span class="keyword">in</span> file test.py</div></pre></td></tr></table></figure></p>
+<p>所以，为了去更好的兼容非ASCII码的源文件，我们最好在第一行使用下面的代码，显式的指定文件编码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div></pre></td></tr></table></figure></p>
+<h4 id="Python中表示字符串的类型"><a href="#Python中表示字符串的类型" class="headerlink" title="Python中表示字符串的类型"></a>Python中表示字符串的类型</h4><p>python中与字符串有关的两种数据格式是unicode和str。它们都是basestring的子类。<br>对于同一个字符串    「你好」，<br>用str表示时，用utf-8编码表示为 ‘\xe4\xbd\xa0\xe5\xa5\xbd’<br>而用unicode表示时，编码为u’\u4f60\u597d’</p>
+<h4 id="Python中str和unicode之间转换"><a href="#Python中str和unicode之间转换" class="headerlink" title="Python中str和unicode之间转换"></a>Python中str和unicode之间转换</h4><p>str —-decode–&gt;   unicode<br>unicode ——-encode——&gt; str<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">8</span>]: a = <span class="string">'你好'</span></div><div class="line">In [<span class="number">9</span>]: type(a)</div><div class="line">&lt;type <span class="string">'str'</span>&gt;</div><div class="line">In [<span class="number">10</span>]: b = a.decode(<span class="string">'utf-8'</span>)</div><div class="line">In [<span class="number">11</span>]: type(b)</div><div class="line">&lt;type <span class="string">'unicode'</span>&gt;</div><div class="line">In [<span class="number">12</span>]: a</div><div class="line"><span class="string">'\xe4\xbd\xa0\xe5\xa5\xbd'</span></div><div class="line">In [<span class="number">13</span>]: b</div><div class="line"><span class="string">u'\u4f60\u597d'</span></div><div class="line">In [<span class="number">14</span>]: c = b.encode(<span class="string">'utf-8'</span>)</div><div class="line">In [<span class="number">15</span>]: c</div><div class="line"><span class="string">'\xe4\xbd\xa0\xe5\xa5\xbd'</span></div><div class="line">In [<span class="number">16</span>]: type(c)</div><div class="line">&lt;type <span class="string">'str'</span>&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="python中str函数和unicode函数"><a href="#python中str函数和unicode函数" class="headerlink" title="python中str函数和unicode函数"></a>python中str函数和unicode函数</h4><p>str(s)等价于s.encode(‘ascii’)<br>unicode(s)等价于s.decode(‘ascii’)，<br>括号里面的’ascii’替换成你的默认编码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">31</span>]: s = <span class="string">u'你好'</span></div><div class="line">In [<span class="number">32</span>]: s</div><div class="line"><span class="string">u'\u4f60\u597d'</span></div><div class="line">In [<span class="number">33</span>]: str(s)</div><div class="line">UnicodeEncodeError: <span class="string">'ascii'</span> codec can<span class="string">'t encode characters in position 0-1: ordinal not in range(128)</span></div></pre></td></tr></table></figure></p>
+<p>因为ASCII编码无法去表示中文的「你好」，所以会产生上述报错。</p>
+<h3 id="个人的建议"><a href="#个人的建议" class="headerlink" title="个人的建议"></a>个人的建议</h3><ol>
+<li>在程序中不要随意的在各种字符中变换</li>
+<li>在源文件开头使用# -*- coding: utf-8 -*-</li>
+<li>在遇到问题的时候，先想一想目前的字符串是什么字符，目标是什么字符。然后在通过unicode为桥梁进行转换。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://dukeyu1991.github.io/2016/06/17/git分支管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Duke Yu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="慎思之,笃行之">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/17/git分支管理/" itemprop="url">git分支管理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-17T22:06:09+08:00">
+                2016-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>工作时，git使用是没有清晰的流程，往往会造成在提交代码时经常和线上的代码库冲突。更加严重的情况，为了想维持git log的线性状态而使用rebase，但不是完全了解rebase的功能。遇到冲突时，merge和rebase就乱抓乱用，让git log变得一团糟。真正遇到问题时，根本不太可能通过git log分析出问题出现的位置。<br>Google了许多的文章后，我学到了很多，以后自己就这样用git了。</p>
+<h2 id="具体的工作流程"><a href="#具体的工作流程" class="headerlink" title="具体的工作流程"></a>具体的工作流程</h2><ol>
+<li><p>假设你现在在master分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b work-branch # 你的工作分支</div></pre></td></tr></table></figure>
+</li>
+<li><p>在你自己的工作分支上码代码ing， 完成后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git add your-files #添加所有你需要commit的文件</div><div class="line">git commit -m &apos;add my file&apos;</div></pre></td></tr></table></figure>
+</li>
+<li><p>返回你当前分支的父分支，并且保持此分支的远端和本地保持一致</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git checkout master</div><div class="line">git fetch origin </div><div class="line">git rebase origin/master # 如果远端的master分支有修改的情况，否则无视此条命令</div></pre></td></tr></table></figure>
+</li>
+<li><p>返回你的工作目录，并且将工作分支保持为最新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git checkout work-branch</div><div class="line">git rebase master</div></pre></td></tr></table></figure>
+</li>
+<li><p>再返回master分支上，将新的需要提交的commit合并到master中，并且推到远端master上。最后，删除你的工作分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git checkout master</div><div class="line">git merge work-branch</div><div class="line">git push origin master</div><div class="line">git branch -d work-branch</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这样能保证提交的git log维持在一个线性的有序的风格，便于分析如：代码提交、出错分析等各种问题。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://dukeyu1991.github.io/2016/06/12/同一台机器多个ssh-key/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Duke Yu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="慎思之,笃行之">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/12/同一台机器多个ssh-key/" itemprop="url">同一台机器多个ssh key</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-12T19:43:56+08:00">
+                2016-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><p>我有多个git的帐号，一个github（自己日常业余使用），一个公司代码库的帐号。这两者都直接用ssh-key连接，但工作的邮箱和github上的邮箱不一样。这样会导致后一个会覆盖前一个的ssh-key，其中一个必然用不了。</p>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>在~/.ssh文件里生成多个ssh-key，接着在config文件中进行配置，就OK了。</p>
+<h2 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h2><ol>
+<li><p>先生成第一个ssh-key，我一般都是用gmail邮箱，大家可按自己的喜好配置</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;your-email@gmail.com&quot;</div></pre></td></tr></table></figure>
+<p> 如果不需要其他的功能，一般一路回车即可。</p>
+</li>
+<li><p>再生成第二个ssh-key</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -f ~/.ssh/test -C &quot;another-email@gmail.com&quot;</div></pre></td></tr></table></figure>
+<p>-f后面的值代表ssh-key存放的位置及其名字。注意名字要与其他存在的key名排重。</p>
+</li>
+<li><p>加入这两个ssh-key私钥 </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ssh-add ~/.ssh/id_rsa</div><div class="line">ssh-add ~/.ssh/test</div></pre></td></tr></table></figure>
+</li>
+<li><p>在~/.ssh中新建并配置config</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Host bitbucket</div><div class="line">    HostName bitbucket.org //这里填入你对应想要的地址</div><div class="line">    PreferredAuthentications publickey  </div><div class="line">    IdentityFile ~/.ssh/id_rsa //这里填入你想使用的key</div></pre></td></tr></table></figure>
+</li>
+<li><p>测试是否成功</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -T bitbucket.org</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>出现了 <code>Hi ! You&#39;ve successfully authenticated, but  does not provide shell access.</code> 表示配置成功</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>每次开机之后，都需要重新手动加入这个ssh key。导致这个问题的原因是:  <strong>ssh-add不是用来永久性的记录你所使用的私钥。</strong><br>解决方法：执行下面这条命令</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-add -K path/to/your/ssh-key</div></pre></td></tr></table></figure>
           
         
       
@@ -420,7 +1144,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

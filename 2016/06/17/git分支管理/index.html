@@ -90,16 +90,16 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="工作时，git使用是没有清晰的流程，往往会造成在提交代码时经常和线上的代码库冲突。更加严重的情况，为了想维持git log的线性状态而使用rebase，但不是完全了解rebase的功能。遇到冲突时，merge和rebase就乱抓乱用，让git log变得一团糟。真正遇到问题时，根本不太可能通过git log分析出问题出现的位置。Google了许多的文章后，我学到了很多，以后自己就这样用git了。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://dukeyu1991.github.io/2017/05/14/hello-world/index.html">
+<meta property="og:title" content="git分支管理">
+<meta property="og:url" content="http://dukeyu1991.github.io/2016/06/17/git分支管理/index.html">
 <meta property="og:site_name" content="慎思之,笃行之">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-05-14T06:46:08.000Z">
+<meta property="og:description" content="工作时，git使用是没有清晰的流程，往往会造成在提交代码时经常和线上的代码库冲突。更加严重的情况，为了想维持git log的线性状态而使用rebase，但不是完全了解rebase的功能。遇到冲突时，merge和rebase就乱抓乱用，让git log变得一团糟。真正遇到问题时，根本不太可能通过git log分析出问题出现的位置。Google了许多的文章后，我学到了很多，以后自己就这样用git了。">
+<meta property="og:updated_time" content="2016-06-17T14:16:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="git分支管理">
+<meta name="twitter:description" content="工作时，git使用是没有清晰的流程，往往会造成在提交代码时经常和线上的代码库冲突。更加严重的情况，为了想维持git log的线性状态而使用rebase，但不是完全了解rebase的功能。遇到冲突时，merge和rebase就乱抓乱用，让git log变得一团糟。真正遇到问题时，根本不太可能通过git log分析出问题出现的位置。Google了许多的文章后，我学到了很多，以后自己就这样用git了。">
 
 
 
@@ -127,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://dukeyu1991.github.io/2017/05/14/hello-world/"/>
+  <link rel="canonical" href="http://dukeyu1991.github.io/2016/06/17/git分支管理/"/>
 
 
 
 
 
-  <title>Hello World | 慎思之,笃行之</title>
+  <title>git分支管理 | 慎思之,笃行之</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -263,7 +263,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://dukeyu1991.github.io/2017/05/14/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://dukeyu1991.github.io/2016/06/17/git分支管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Duke Yu">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">git分支管理</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-14T14:46:08+08:00">
-                2017-05-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-17T22:06:09+08:00">
+                2016-06-17
               </time>
             
 
@@ -327,15 +327,25 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>工作时，git使用是没有清晰的流程，往往会造成在提交代码时经常和线上的代码库冲突。更加严重的情况，为了想维持git log的线性状态而使用rebase，但不是完全了解rebase的功能。遇到冲突时，merge和rebase就乱抓乱用，让git log变得一团糟。真正遇到问题时，根本不太可能通过git log分析出问题出现的位置。<br>Google了许多的文章后，我学到了很多，以后自己就这样用git了。</p>
+<h2 id="具体的工作流程"><a href="#具体的工作流程" class="headerlink" title="具体的工作流程"></a>具体的工作流程</h2><ol>
+<li><p>假设你现在在master分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b work-branch # 你的工作分支</div></pre></td></tr></table></figure>
+</li>
+<li><p>在你自己的工作分支上码代码ing， 完成后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git add your-files #添加所有你需要commit的文件</div><div class="line">git commit -m &apos;add my file&apos;</div></pre></td></tr></table></figure>
+</li>
+<li><p>返回你当前分支的父分支，并且保持此分支的远端和本地保持一致</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git checkout master</div><div class="line">git fetch origin </div><div class="line">git rebase origin/master # 如果远端的master分支有修改的情况，否则无视此条命令</div></pre></td></tr></table></figure>
+</li>
+<li><p>返回你的工作目录，并且将工作分支保持为最新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git checkout work-branch</div><div class="line">git rebase master</div></pre></td></tr></table></figure>
+</li>
+<li><p>再返回master分支上，将新的需要提交的commit合并到master中，并且推到远端master上。最后，删除你的工作分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git checkout master</div><div class="line">git merge work-branch</div><div class="line">git push origin master</div><div class="line">git branch -d work-branch</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这样能保证提交的git log维持在一个线性的有序的风格，便于分析如：代码提交、出错分析等各种问题。</p>
 
       
     </div>
@@ -389,6 +399,26 @@
         
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/12/同一台机器多个ssh-key/" rel="next" title="同一台机器多个ssh key">
+                <i class="fa fa-chevron-left"></i> 同一台机器多个ssh key
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/04/python编码问题/" rel="prev" title="python编码问题">
+                python编码问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
@@ -457,7 +487,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -507,7 +537,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#具体的工作流程"><span class="nav-number">1.</span> <span class="nav-text">具体的工作流程</span></a></li></ol></div>
             
 
           </div>

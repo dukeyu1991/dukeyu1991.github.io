@@ -1,0 +1,795 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="之前一直用print去调试Python代码，经常左一个print，右一个print。偶尔碰上去查询大量数据的代码，不仅麻烦，而且很浪费时间。整体的调试效率很低。为了提高调试的效率，决定学习一下pdb。pdb提供了在Python debug模式中交互的功能，在交互的过程中包含这各个变量，非常方便的去调用。并且能够一步一步的去执行代码，这样能够更加清晰的认识程序实际的执行过程并找出其中的bug。 启动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python pdb入门">
+<meta property="og:url" content="http://dukeyu1991.github.io/2016/08/24/python-pdb入门/index.html">
+<meta property="og:site_name" content="慎思之,笃行之">
+<meta property="og:description" content="之前一直用print去调试Python代码，经常左一个print，右一个print。偶尔碰上去查询大量数据的代码，不仅麻烦，而且很浪费时间。整体的调试效率很低。为了提高调试的效率，决定学习一下pdb。pdb提供了在Python debug模式中交互的功能，在交互的过程中包含这各个变量，非常方便的去调用。并且能够一步一步的去执行代码，这样能够更加清晰的认识程序实际的执行过程并找出其中的bug。 启动">
+<meta property="og:updated_time" content="2016-10-27T03:40:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python pdb入门">
+<meta name="twitter:description" content="之前一直用print去调试Python代码，经常左一个print，右一个print。偶尔碰上去查询大量数据的代码，不仅麻烦，而且很浪费时间。整体的调试效率很低。为了提高调试的效率，决定学习一下pdb。pdb提供了在Python debug模式中交互的功能，在交互的过程中包含这各个变量，非常方便的去调用。并且能够一步一步的去执行代码，这样能够更加清晰的认识程序实际的执行过程并找出其中的bug。 启动">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://dukeyu1991.github.io/2016/08/24/python-pdb入门/"/>
+
+
+
+
+
+  <title>python pdb入门 | 慎思之,笃行之</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">慎思之,笃行之</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://dukeyu1991.github.io/2016/08/24/python-pdb入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Duke Yu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="慎思之,笃行之">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python pdb入门</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-24T18:55:26+08:00">
+                2016-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前一直用print去调试Python代码，经常左一个print，右一个print。偶尔碰上去查询大量数据的代码，不仅麻烦，而且很浪费时间。整体的调试效率很低。为了提高调试的效率，决定学习一下pdb。<br>pdb提供了在Python debug模式中交互的功能，在交互的过程中包含这各个变量，非常方便的去调用。并且能够一步一步的去执行代码，这样能够更加清晰的认识程序实际的执行过程并找出其中的bug。</p>
+<h2 id="启动pdb"><a href="#启动pdb" class="headerlink" title="启动pdb"></a>启动pdb</h2><p>首先，需要在想要调试的代码处启用调试交互。这里有几种方式去启动pdb</p>
+<ol>
+<li><p>从命令行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> ipython -m pdb pdb_test.py</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(3)&lt;module&gt;()</div><div class="line">-&gt; import pdb</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p>在Python交互环境里 <em>In[3]中的main为pdb_test的函数</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="keyword">import</span> pdb_test</div><div class="line">In [<span class="number">2</span>]: <span class="keyword">import</span> pdb</div><div class="line">In [<span class="number">3</span>]: pdb.run(<span class="string">'pdb_test.main()'</span>)</div><div class="line">&gt; &lt;string&gt;(<span class="number">1</span>)&lt;module&gt;()</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p>在代码需要调试处。在需要进行调试的代码前加入 <code>pdb.set_trace()</code>, 然后启动命令行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">    ipython pdb_test.py</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(14)main()</div><div class="line">-&gt; print class_student['english_1']</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p>程序报错后 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> # 此处程序出错</div><div class="line">In [3]: import pdb</div><div class="line">In [4]: pdb.pm()</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(12)main()</div><div class="line">-&gt; print class_student['sport_1']</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="pdb主要的命令"><a href="#pdb主要的命令" class="headerlink" title="pdb主要的命令"></a>pdb主要的命令</h2><p>进入了调试模式后，可以使用 <code>h(elp)</code> 查看帮助。以下将pdb主要的几个命令罗列在下，以备不时之需查用。</p>
+<h3 id="断点设置"><a href="#断点设置" class="headerlink" title="断点设置"></a>断点设置</h3><ol>
+<li><p><code>b(reak) [代码行号] | [文件名:代码行号]</code> 不加数字列出所有断点，加数字表示在行号处增加一个断点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">(Pdb) b <span class="number">10</span>  <span class="comment"># 在代码第10行增加一个断点</span></div><div class="line">Breakpoint <span class="number">1</span> at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line">(Pdb) b  <span class="comment"># 显示所有断点</span></div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line">(Pdb) b pdb_test.py:<span class="number">11</span></div><div class="line">Breakpoint <span class="number">2</span> at /Users/somebody/Items/test/pdb_test.py:<span class="number">11</span></div><div class="line">(Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line"><span class="number">2</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">11</span></div><div class="line"> ``` </div><div class="line"><span class="number">2.</span> `cl(ear) [断点标识]`   不加断点表示表示清空所有的断点。</div><div class="line"> ``` python</div><div class="line">(Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line"><span class="number">2</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">11</span></div><div class="line">(Pdb) cl <span class="number">1</span></div><div class="line">Deleted breakpoint <span class="number">1</span></div><div class="line">(Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">2</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">11</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>disable 断点编号</code> 令断点失效，但不同cl删除断点。它只让断点失效，但不删除。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> (Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line">(Pdb) disable <span class="number">1</span></div><div class="line">(Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep no    at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>enable 断点编号</code> 将3中失效的断点重新置为有效。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> (Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep no    at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div><div class="line">(Pdb) enable <span class="number">1</span></div><div class="line">(Pdb) b</div><div class="line">Num Type         Disp Enb   Where</div><div class="line"><span class="number">1</span>   breakpoint   keep yes   at /Users/somebody/Items/test/pdb_test.py:<span class="number">10</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>tbreak [代码行号] | [文件名:代码行号]</code> 临时性的断点，当该短点首次被击中时，会自动被移除。其他的同break没有区别。</p>
+</li>
+<li><code>commands 断点编号</code>在断点前执行前，可以启动一个脚本编辑页，在其中显示想要或需要显示的变量，输入end退出编辑页。然后再执行该行前，使用<code>continue</code>，就能看到之前编辑过的显示的变量。<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line">  8  -&gt;	    print a</div><div class="line">  9  	    print b</div><div class="line"> 10  	    c = &#123;'a': 1, 'b': 2&#125;</div><div class="line">(Pdb) b 11</div><div class="line">Breakpoint 1 at /Users/somebody/Items/test/pdb_test.py:11</div><div class="line">(Pdb) commands 1</div><div class="line">(com) p a</div><div class="line">(com) p c</div><div class="line">(com) end</div><div class="line">(Pdb) continue</div><div class="line">10</div><div class="line">&#123;'a': 1, 'b': 2&#125;</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(11)add_test()</div><div class="line">-&gt; d = c.get('a', None)</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="程序运行"><a href="#程序运行" class="headerlink" title="程序运行"></a>程序运行</h3><ol>
+<li><p><code>n(ext)</code> 单步运行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line"> 10 B-&gt;	        'english_2': 'frank',</div><div class="line">(Pdb) n</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(11)main()</div><div class="line">-&gt; 'math_1': 'frank',</div><div class="line">(Pdb) l</div><div class="line"> 11  -&gt;	        'math_1': 'frank',</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>s(tep)</code> 进入函数内</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line"> 17  	if __name__ == '__main__':</div><div class="line"> 18  	    pdb.set_trace()</div><div class="line"> 19  -&gt;	    main()</div><div class="line"> 20</div><div class="line">[EOF]</div><div class="line">(Pdb) s</div><div class="line">--Call--</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(6)main()</div><div class="line">-&gt; def main():</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>c(ont(inue))</code> 调到下一个断点</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line"> 11  -&gt;	        'math_1': 'frank',</div><div class="line">(Pdb) c</div><div class="line">duke</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(15)main()</div><div class="line">-&gt; print class_student['sport_1']</div><div class="line">(Pdb) l</div><div class="line"> 15 B-&gt;	    print class_student['sport_1']</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>r(eturn)</code> 执行代码直至程序从当前的函数返回</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> (Pdb) return</div><div class="line">aaaaa</div><div class="line">exit test function</div><div class="line">--Return--</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(22)test()-&gt;None</div><div class="line">-&gt; print 'exit test function'</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>unt(il)</code> 当执行的代码大于当前执行的位置行号, 停止。通常用于等待一个遍历或者重复的代码段执行完毕。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line"> 15  	    for item in xrange(100):</div><div class="line"> 16  -&gt;	        continue</div><div class="line"> 17</div><div class="line"> 18  	    return a + b</div><div class="line">(Pdb) until</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(18)add_test()</div><div class="line">-&gt; return a + b</div><div class="line">(Pdb) l</div><div class="line"> 15  	    for item in xrange(100):</div><div class="line"> 16  	        continue</div><div class="line"> 18  -&gt;	    return a + b</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>j(ump) 代码行号</code> 直接跳到目标代码行执行。方便你重新设定需要执行的位置，也可以略过不需要执行的代码。但是不能跳入一个循环中或者一个try:except的代码块中。finally的代码必须要执行，所以也不能跳出finally的代码段。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l  6  	def add_test(a, b):</div><div class="line">  7  	    pdb.set_trace()</div><div class="line">  8  -&gt;	    print a</div><div class="line">  (Pdb) jump 19</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(19)add_test()</div><div class="line">-&gt;</div><div class="line">(Pdb) l</div><div class="line"> 19</div><div class="line"> 20  -&gt;	    d = c.get('a', None)</div><div class="line"> 22  	    return a + b</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>u(p)</code> 从当前的未知跳到执行的栈中的上一层。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> (Pdb) l</div><div class="line">  9  	    print b</div><div class="line"> 10  -&gt;	    c = &#123;'a': 1, 'b': 2&#125;</div><div class="line">(Pdb) up</div><div class="line">&gt; /Users/somebody/Items/test/pdb_test.py(48)&lt;module&gt;()</div><div class="line">-&gt; add_test(a, b)</div><div class="line">(Pdb) l</div><div class="line"> 47  	    b = 5</div><div class="line"> 48  -&gt;	    add_test(a, b)</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>d(own)</code> 作用与up相反，从当前的栈层中跳入下一层的栈中。</p>
+</li>
+<li><code>ignore 断点编号 [忽略次数]</code> 忽略某个断点n次。如果没有忽略次数，将该断点重新设置为有效，不会被忽略。</li>
+<li><code>condition 断点编号 [判断条件]</code>设置某个断点在判断条件为True时，断点才有效。省略判断条件，则令之前condition设定的所有条件失效。</li>
+</ol>
+<h3 id="程序查看"><a href="#程序查看" class="headerlink" title="程序查看"></a>程序查看</h3><ol>
+<li><code>w(here)</code> 显示当前代码所处的栈层</li>
+<li><code>l(ist)</code> 会显示当前执行的附件的代码，不断的使用list会不断列出代码，直至代码末尾。</li>
+<li><p><code>a(rgs)</code> 显示当前函数所有的变量</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">  (Pdb) l</div><div class="line">   6  	def add_test(a, b):</div><div class="line">  7  	    pdb.set_trace()</div><div class="line">  8  -&gt;	    print a</div><div class="line">  9  	    print b</div><div class="line"> 10  	    return a + b</div><div class="line"> (Pdb) args</div><div class="line">a = 10</div><div class="line">b = 5</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>p 表达式</code> 显示 <em>表达式</em> 在当前环境中执行的的结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> <span class="comment"># 同3中的上下文环境</span></div><div class="line">(Pdb) p a</div><div class="line"><span class="number">10</span></div><div class="line">(Pdb) p a + b</div><div class="line"><span class="number">15</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>pp 表达式</code> 功能同4，但是使用Python中的pprint模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> (Pdb) pp a</div><div class="line"><span class="number">10</span></div><div class="line">(Pdb) pp a + b</div><div class="line"><span class="number">15</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>whatis 表达式</code> 显示表达式运算结果的类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> (Pdb) whatis <span class="number">10</span>+<span class="number">5</span></div><div class="line">&lt;type <span class="string">'int'</span>&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>bt</code> 貌似和<code>where</code>一个功能，都是显示栈层的。</p>
+</li>
+</ol>
+<h3 id="pdb自身命令"><a href="#pdb自身命令" class="headerlink" title="pdb自身命令"></a>pdb自身命令</h3><ol>
+<li><code>q(uit)</code> 退出调试环境。</li>
+<li><code>exit</code> 作用同1。</li>
+<li><p><code>alias [别名 [命令]]</code> 将某一个命令起一个别名。执行该别名，相当于执行命令。后面不带参数，表示查看所有的关联的命令。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> (Pdb) alias test_command p a</div><div class="line">(Pdb) alias</div><div class="line">test_command = p a</div><div class="line">(Pdb) test_command</div><div class="line"><span class="number">10</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>unalias 别名</code> 作用和 <code>alias</code>相反，取消命令和别名关联。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> (Pdb) alias</div><div class="line">test_command = p a</div><div class="line">(Pdb) unalias test_command</div><div class="line">(Pdb) alias</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>run</code> 当用命令行方式启动的调试时,执行run能够重新启动调试的代码。</p>
+</li>
+<li><code>restart</code> 就是 <code>run</code>的一个马甲。</li>
+<li><code>debug</code>在debug里面再开一个debug界面，相当于递归debug。<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> (Pdb) debug</div><div class="line">ENTERING RECURSIVE DEBUGGER</div><div class="line">&gt; &lt;string&gt;(<span class="number">1</span>)&lt;module&gt;()</div><div class="line">((Pdb)) quit</div><div class="line">LEAVING RECURSIVE DEBUGGER</div><div class="line">(Pdb)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>现在好多编辑器都集成了pdb debug功能，界面更加的友好。譬如pycharm就有很好的debug功能。在IDE debug的时候，代码显示的更多，可以更加方便的调试。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Duke Yu WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Duke Yu Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/20/python尾递归/" rel="next" title="python尾调用">
+                <i class="fa fa-chevron-left"></i> python尾调用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/29/python-classmethod和staticmethod区别/" rel="prev" title="python classmethod和staticmethod区别">
+                python classmethod和staticmethod区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Duke Yu" />
+          <p class="site-author-name" itemprop="name">Duke Yu</p>
+           
+              <p class="site-description motion-element" itemprop="description">文章皆是自己总结,绝非直接转载</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/dukeyu1991" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动pdb"><span class="nav-number">1.</span> <span class="nav-text">启动pdb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pdb主要的命令"><span class="nav-number">2.</span> <span class="nav-text">pdb主要的命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#断点设置"><span class="nav-number">2.1.</span> <span class="nav-text">断点设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序运行"><span class="nav-number">2.2.</span> <span class="nav-text">程序运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序查看"><span class="nav-number">2.3.</span> <span class="nav-text">程序查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pdb自身命令"><span class="nav-number">2.4.</span> <span class="nav-text">pdb自身命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">3.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Duke Yu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
